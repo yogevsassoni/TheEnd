@@ -10,6 +10,13 @@ class Movie:
         self.rating = rating
         self.genre = genre
 
+    def to_dict(self):
+        return {
+            'name': self.name,
+            'rating': self.rating,
+            'genre': self.genre
+        }
+
     def __str__(self):
         return f"Movie Name: {self.name}, Rating: {self.rating}, Genre: {self.genre}"
 

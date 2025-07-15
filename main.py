@@ -1,3 +1,5 @@
+import json
+
 from Movie import Movie
 from User import User
 
@@ -117,10 +119,23 @@ def offer_best_rated_genre_movies(movies: list, valid_genres: list) -> list:
     return [best_movie_by_genre(movies, genre) for genre in valid_genres]
 
 
+def save_all_users(all_users, filename='users_data.json'):
+    """
+    Save all users' data to a JSON file
+    :param filename: file to save data to
+    :param all_users: dictionary of username -> user data dict
+    """
+    with open(filename, 'w') as f:
+        json.dump(all_users, f, indent=4)
+
+    print(f"All users data saved to {filename}")
+
+
 def main():
     """
     Run the Movie Review App main flow
     """
+    all_users = {}
     print("Welcome to the Movie Review App")
     username = input("Please login by username: ")
     movies = get_movie_list()
@@ -147,6 +162,8 @@ def main():
 
     user = User(username, movies, valid_genres)
     print(user)
+    all_users[user.username] = user.to_dict()
+    save_all_users(all_users)
 
 
 if __name__ == '__main__':
