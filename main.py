@@ -1,20 +1,5 @@
-class Movie:
-    def __init__(self, name, rating, genre):
-        """
-        Create a Movie object
-        :param name: movie name
-        :param rating: movie rating
-        :param genre: movie genre
-        """
-        self.name = name
-        self.rating = rating
-        self.genre = genre
-
-    def __str__(self):
-        return f"Movie Name: {self.name}, Rating: {self.rating}, Genre: {self.genre}"
-
-    def __repr__(self):
-        return f"Movie(name='{self.name}', rate={self.rating}, genre='{self.genre}')"
+from Movie import Movie
+from User import User
 
 
 def get_movie_list():
@@ -137,7 +122,7 @@ def main():
     Run the Movie Review App main flow
     """
     print("Welcome to the Movie Review App")
-    user = input("Please login by username: ")
+    username = input("Please login by username: ")
     movies = get_movie_list()
 
     if not movies:
@@ -160,13 +145,8 @@ def main():
     best_movies = offer_best_rated_genre_movies(movies, valid_genres)
     print(f"Best rated movies in your favourite genres: {best_movies}")
 
-    user_dict = {
-        user: {
-            'Movies': movies,
-            'favourites': valid_genres
-        }
-    }
-    print(user_dict)
+    user = User(username, movies, valid_genres)
+    print(user)
 
 
 if __name__ == '__main__':
