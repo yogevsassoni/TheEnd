@@ -54,6 +54,29 @@ def get_min_rating_movies(movies):
     return [movie for movie in movies if movie.rating == min_rating]
 
 
+def movies_by_genre(movies, genre):
+    return [movie for movie in movies if movie.genre == genre]
+
+
+def best_movie_by_genre(movies, genre):
+    return get_max_rating_movies(movies_by_genre(movies, genre))
+
+
+def offer_best_rated_genre_movies(movies):
+    genres_input = input("Enter your favourite genres (comma separated): ")
+    available_genres = {movie.genre.lower() for movie in movies}
+
+    input_genres = [genre.strip() for genre in genres_input.split(',')]
+    valid_genres = [genre for genre in input_genres if genre.lower() in available_genres]
+    invalid_genres = [genre for genre in input_genres if genre.lower() not in available_genres]
+
+    if invalid_genres:
+        print(f"Ignored genres not found: {', '.join(invalid_genres)}")
+        print(f"Available genres: {', '.join(sorted(available_genres))}")
+
+    return [best_movie_by_genre(movies, genre) for genre in valid_genres]
+
+
 def main():
     print("Welcome to the Movie Review App")
     movies = get_movie_list()
@@ -66,6 +89,7 @@ def main():
             f"\033[92mThe highest rating movies is:\033[0m {get_max_rating_movies(movies)}\n"
             f"\033[91mThe lowest rating movies is:\033[0m {get_min_rating_movies(movies)}"
         )
+        print(offer_best_rated_genre_movies(movies))
 
 
 if __name__ == '__main__':
